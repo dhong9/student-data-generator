@@ -37,7 +37,8 @@ randScoreFuncs = [
 ]
 
 # Generate random scores
-numberOfEntries = 10 # Number of entries per student
+numberOfEntries = configData["homeworks"] # Number of entries per student
+corruptRate = configData["corruptRate"] # Data corruption probability
 scores = []
 for name in names:
     randRule = random.uniform(0, 100)
@@ -45,7 +46,7 @@ for name in names:
     randIndex = 0
     for rule in scoreRules:
         if x <= randRule <= x + rule:
-            scores.append([round(randScoreFuncs[randIndex]()) for i in range(numberOfEntries)])
+            scores.append([-1 if random.uniform(0, 100) < corruptRate else round(randScoreFuncs[randIndex]()) for i in range(numberOfEntries)])
             break
         x += rule
         randIndex += 1

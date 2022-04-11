@@ -3,5 +3,7 @@
     "names": {
         "firstNames": "firstNames.txt",
         "lastNames": "lastNames.txt"
-    }
+    },
+    "homeworks": 10,
+    "corruptRate": 5
 }
