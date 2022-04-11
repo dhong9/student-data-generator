@@ -1,14 +1,19 @@
-import random, csv
+import random, csv, json
 
 # Utility functions:
-
+readConfig = lambda src: json.load(open(src))
 readNames = lambda src: open(src, "r").read().split("\n")
+
+# Read config file
+print("Loading configuration...")
+configData = readConfig("config.json")
+inputFolder = configData["inputFolder"]
 
 print("Generating data...")
 
 # Read first and last names from input files
-firstNames = readNames("firstNames.txt")
-lastNames = readNames("lastNames.txt")
+firstNames = readNames(inputFolder + "/firstNames.txt")
+lastNames = readNames(inputFolder + "/lastNames.txt")
 
 # Make all combinations of first and last names
 names = sorted([fName + ' ' + lName for fName in firstNames for lName in lastNames])

@@ -1,0 +1,7 @@
+{
+    "inputFolder": "./input",
+    "names": {
+        "firstNames": "firstNames.txt",
+        "lastNames": "lastNames.txt"
+    }
+}
