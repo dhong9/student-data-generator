@@ -27,14 +27,8 @@ print("Found " + str(numberOfStudents) + " students")
 ids = sorted(random.sample(range(100000, 1000000), numberOfStudents))
 
 # Define rule for random score generating
-scoreRules = [10, 15, 40, 20, 15]
-randScoreFuncs = [
-    lambda: random.uniform(0, 65),
-    lambda: random.uniform(55, 75),
-    lambda: random.uniform(70, 85),
-    lambda: random.uniform(76, 92),
-    lambda: random.uniform(85, 100)
-]
+scoreRules = configData["scoreRules"]
+randScoreFuncs = [lambda: random.uniform(p[0], p[1]) for p in configData["percentageRanges"]]
 
 # Generate random scores
 numberOfEntries = configData["homeworks"] # Number of entries per student
