@@ -37,4 +37,4 @@ These are the grade distributions defined as a list of probabilities. The list o
 
 ### `yearRange`
 
-Define the year range to bucket students in. Ranges are inclusive. The `end` field _cannot_ be less than `start`. If `start` is the same as `end`, the data generated will be for one year.
+Define the year range to that students can be assigned to. Ranges are inclusive. The `end` field _cannot_ be less than `start`. If `start` is the same as `end`, the data generated will be for one year.
