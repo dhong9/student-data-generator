@@ -1,14 +1,19 @@
-import random, csv
+import random, csv, json
 
 # Utility functions:
-
+readConfig = lambda src: json.load(open(src))
 readNames = lambda src: open(src, "r").read().split("\n")
+
+# Read config file
+print("Loading configuration...")
+configData = readConfig("config.json")
+inputFolder = configData["inputFolder"]
 
 print("Generating data...")
 
 # Read first and last names from input files
-firstNames = readNames("firstNames.txt")
-lastNames = readNames("lastNames.txt")
+firstNames = readNames(inputFolder + "/firstNames.txt")
+lastNames = readNames(inputFolder + "/lastNames.txt")
 
 # Make all combinations of first and last names
 names = sorted([fName + ' ' + lName for fName in firstNames for lName in lastNames])
@@ -22,17 +27,12 @@ print("Found " + str(numberOfStudents) + " students")
 ids = sorted(random.sample(range(100000, 1000000), numberOfStudents))
 
 # Define rule for random score generating
-scoreRules = [10, 15, 40, 20, 15]
-randScoreFuncs = [
-    lambda: random.uniform(0, 65),
-    lambda: random.uniform(55, 75),
-    lambda: random.uniform(70, 85),
-    lambda: random.uniform(76, 92),
-    lambda: random.uniform(85, 100)
-]
+scoreRules = configData["scoreRules"]
+randScoreFuncs = [lambda: random.uniform(p[0], p[1]) for p in configData["percentageRanges"]]
 
 # Generate random scores
-numberOfEntries = 10 # Number of entries per student
+numberOfEntries = configData["homeworks"] # Number of entries per student
+corruptRate = configData["corruptRate"] # Data corruption probability
 scores = []
 for name in names:
     randRule = random.uniform(0, 100)
@@ -40,7 +40,7 @@ for name in names:
     randIndex = 0
     for rule in scoreRules:
         if x <= randRule <= x + rule:
-            scores.append([round(randScoreFuncs[randIndex]()) for i in range(numberOfEntries)])
+            scores.append([-1 if random.uniform(0, 100) < corruptRate else round(randScoreFuncs[randIndex]()) for i in range(numberOfEntries)])
             break
         x += rule
         randIndex += 1

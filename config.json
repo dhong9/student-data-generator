@@ -1,0 +1,19 @@
+{
+    "inputFolder": "./input",
+    "names": {
+        "firstNames": "firstNames.txt",
+        "lastNames": "lastNames.txt"
+    },
+    "homeworks": 10,
+    "corruptRate": 5,
+    "percentageRanges": [
+        [0, 65],
+        [55, 75],
+        [70, 85],
+        [76, 92],
+        [85, 100]
+    ],
+    "scoreRules": [
+        10, 15, 40, 20, 15
+    ]
+}
