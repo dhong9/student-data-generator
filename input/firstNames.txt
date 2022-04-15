@@ -20,3 +20,5 @@ Celery
 Potato
 Onion
 Tomato
+Guava
+Truffle

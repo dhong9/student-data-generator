@@ -34,3 +34,7 @@ These are the range of scores each grade of student gets. The grade orders are: 
 ### `scoreRules`
 
 These are the grade distributions defined as a list of probabilities. The list order starts from the lowest grade (F) to the highest grade (A). The total of the percentages _must_ sum to `100`.
+
+### `yearRange`
+
+Define the year range to that students can be assigned to. Ranges are inclusive. The `end` field _cannot_ be less than `start`. If `start` is the same as `end`, the data generated will be for one year.
