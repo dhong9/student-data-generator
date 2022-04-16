@@ -26,6 +26,7 @@ inputFolder = configData["inputFolder"]
 outputFolder = configData["outputFolder"]
 tables = configData["tables"]
 outputStudents = outputFolder + "/" + tables["students"]
+outputAssignments = outputFolder + "/" + tables["assignments"]
 
 print("Generating data...")
 
@@ -55,36 +56,27 @@ scoreRules = configData["scoreRules"]
 randScoreFuncs = [lambda p=p: random.uniform(p[0], p[1]) for p in configData["percentageRanges"]]
 
 # Generate random scores
-numberOfEntries = configData["homeworks"] # Number of entries per student
+numberOfHomeworks = configData["homeworks"] # Number of entries per student
 corruptRate = configData["corruptRate"] # Data corruption probability
-scores = []
+homeworkScores = []
 for name in names:
     randRule = random.uniform(0, 100)
     x = 0
     randIndex = 0
     for rule in scoreRules:
         if x <= randRule <= x + rule:
-            scores.append([-1 if random.uniform(0, 100) < corruptRate else round(randScoreFuncs[randIndex]()) for i in range(numberOfEntries)])
+            homeworkScores.append([-1 if random.uniform(0, 100) < corruptRate else round(randScoreFuncs[randIndex]()) for i in range(numberOfHomeworks)])
             break
         x += rule
         randIndex += 1
-
-header = ["Student ID"] + ["Assignment #" + str(i + 1) for i in range(numberOfEntries)]
-
-# Output data to a CSV file
-# with open("sampleData.csv", "w", encoding="UTF8", newline="") as f:
-#     writer = csv.writer(f)
-    
-#     # Write header
-#     writer.writerow(header)
-
-#     # Write rows
-#     writer.writerows([[ids[i]] + scores[i] for i in range(numberOfStudents)])
 
 # Write tables to CSV files
 print("Writing generated data to files...")
 
 # Student names with years
 outputData(outputStudents, ["Student ID", "Name", "Year"], [[ids[i], names[i], random.randint(yearMin, yearMax)] for i in range(numberOfStudents)])
+
+# Assignments
+outputData(outputAssignments, ["Student ID"] + ["Assignment " + str(i + 1) for i in range(numberOfHomeworks)], [[ids[i]] + homeworkScores[i] for i in range(numberOfStudents)])
 
 print("Data has been writen to folder: " + outputFolder)
