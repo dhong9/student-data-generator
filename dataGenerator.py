@@ -34,7 +34,7 @@ ids = sorted(random.sample(range(100000, 1000000), numberOfStudents))
 
 # Define rule for random score generating
 scoreRules = configData["scoreRules"]
-randScoreFuncs = [lambda: random.uniform(p[0], p[1]) for p in configData["percentageRanges"]]
+randScoreFuncs = [lambda p=p: random.uniform(p[0], p[1]) for p in configData["percentageRanges"]]
 
 # Generate random scores
 numberOfEntries = configData["homeworks"] # Number of entries per student
