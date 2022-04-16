@@ -1,8 +1,23 @@
 import random, csv, json
 
 # Utility functions:
+
+# Reads JSON file into an object
 readConfig = lambda src: json.load(open(src))
+
+# Reads text file line by line and store them in a list
 readNames = lambda src: open(src, "r").read().split("\n")
+
+# Outputs data to a CSV file
+def outputData(fileName, header, rows):
+    with open(fileName, "w", encoding="UTF8", newline="") as f:
+        writer = csv.writer(f)
+        
+        # Write header
+        writer.writerow(header)
+
+        # Write rows
+        writer.writerows(rows)
 
 # Read config file
 print("Loading configuration...")
@@ -57,21 +72,19 @@ for name in names:
 header = ["Student ID"] + ["Assignment #" + str(i + 1) for i in range(numberOfEntries)]
 
 # Output data to a CSV file
-with open("sampleData.csv", "w", encoding="UTF8", newline="") as f:
-    writer = csv.writer(f)
+# with open("sampleData.csv", "w", encoding="UTF8", newline="") as f:
+#     writer = csv.writer(f)
     
-    # Write header
-    writer.writerow(header)
+#     # Write header
+#     writer.writerow(header)
 
-    # Write rows
-    writer.writerows([[ids[i]] + scores[i] for i in range(numberOfStudents)])
+#     # Write rows
+#     writer.writerows([[ids[i]] + scores[i] for i in range(numberOfStudents)])
 
-# Output student names with years
-with open(outputStudents, "w", encoding="UTF8", newline="") as f:
-    writer = csv.writer(f)
+# Write tables to CSV files
+print("Writing generated data to files...")
 
-    # Write header
-    writer.writerow(["Student ID", "Name", "Year"])
+# Student names with years
+outputData(outputStudents, ["Student ID", "Name", "Year"], [[ids[i], names[i], random.randint(yearMin, yearMax)] for i in range(numberOfStudents)])
 
-    # Write rows
-    writer.writerows([[ids[i], names[i], random.randint(yearMin, yearMax)] for i in range(numberOfStudents)])
+print("Data has been writen to folder: " + outputFolder)
