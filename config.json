@@ -1,8 +1,15 @@
 {
     "inputFolder": "./input",
+    "outputFolder": "./data",
     "names": {
         "firstNames": "firstNames.txt",
         "lastNames": "lastNames.txt"
+    },
+    "tables": {
+        "students": "students.csv",
+        "assignments": "assignments.csv",
+        "quizzes": "quizzes.csv",
+        "exams": "exams.csv"
     },
     "homeworks": 10,
     "corruptRate": 5,
@@ -16,6 +23,11 @@
     "scoreRules": [
         10, 15, 40, 20, 15
     ],
+    "weights": {
+        "assignments": 10,
+        "quizzes": 15,
+        "exams": 75
+    },
     "yearRange": {
         "start": 2014,
         "end": 2017

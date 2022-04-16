@@ -11,6 +11,18 @@ The bulk fo the input data is defined in `config.json`. The fields are described
 
 Which folder contains students' first names and last names?
 
+### `outputFolder`
+
+Which folder should generated data files be outputted in?
+
+### `tables`
+
+Names of output folders:
+* `students`: Student names and year they are from
+* `assignments`: Assignment scores for each student
+* `quizzes`: Quiz scores for each student
+* `exams`: Exam scores for each student
+
 ### `firstNames`
 
 Which file contains students' first names? Assumption is that each name is on its own line.
@@ -34,6 +46,10 @@ These are the range of scores each grade of student gets. The grade orders are: 
 ### `scoreRules`
 
 These are the grade distributions defined as a list of probabilities. The list order starts from the lowest grade (F) to the highest grade (A). The total of the percentages _must_ sum to `100`.
+
+### `weights`
+
+These are the weights of each category (assignments, quizzes, exams) in precent. The sum fo the weights _must_ equal `100`.
 
 ### `yearRange`
 
