@@ -8,6 +8,9 @@ readNames = lambda src: open(src, "r").read().split("\n")
 print("Loading configuration...")
 configData = readConfig("config.json")
 inputFolder = configData["inputFolder"]
+outputFolder = configData["outputFolder"]
+tables = configData["tables"]
+outputStudents = outputFolder + "/" + tables["students"]
 
 print("Generating data...")
 
@@ -51,14 +54,24 @@ for name in names:
         x += rule
         randIndex += 1
 
-header = ["Student ID", "Name", "Year"] + ["Assignment #" + str(i + 1) for i in range(numberOfEntries)]
+header = ["Student ID"] + ["Assignment #" + str(i + 1) for i in range(numberOfEntries)]
 
 # Output data to a CSV file
-with open('sampleData.csv', 'w', encoding='UTF8', newline='') as f:
+with open("sampleData.csv", "w", encoding="UTF8", newline="") as f:
     writer = csv.writer(f)
     
     # Write header
     writer.writerow(header)
 
     # Write rows
-    writer.writerows([[ids[i], names[i], random.randint(yearMin, yearMax)] + scores[i] for i in range(numberOfStudents)])
+    writer.writerows([[ids[i]] + scores[i] for i in range(numberOfStudents)])
+
+# Output student names with years
+with open(outputStudents, "w", encoding="UTF8", newline="") as f:
+    writer = csv.writer(f)
+
+    # Write header
+    writer.writerow(["Student ID", "Name", "Year"])
+
+    # Write rows
+    writer.writerows([[ids[i], names[i], random.randint(yearMin, yearMax)] for i in range(numberOfStudents)])
