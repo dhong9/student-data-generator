@@ -9,7 +9,8 @@
         "students": "students.csv",
         "assignments": "assignments.csv",
         "quizzes": "quizzes.csv",
-        "exams": "exams.csv"
+        "exams": "exams.csv",
+        "weights": "weights.csv"
     },
     "homeworks": 10,
     "quizzes": 5,

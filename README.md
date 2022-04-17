@@ -17,11 +17,12 @@ Which folder should generated data files be outputted in?
 
 ### `tables`
 
-Names of output folders:
+Names of output files:
 * `students`: Student names and year they are from
 * `assignments`: Assignment scores for each student
 * `quizzes`: Quiz scores for each student
 * `exams`: Exam scores for each student
+* `weights`: Weight of each category
 
 ### `firstNames`
 

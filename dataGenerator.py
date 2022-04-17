@@ -44,10 +44,15 @@ outputStudents = outputFolder + "/" + tables["students"]
 outputAssignments = outputFolder + "/" + tables["assignments"]
 outputQuizzes = outputFolder + "/" + tables["quizzes"]
 outputExams = outputFolder + "/" + tables["exams"]
+outputWeights = outputFolder + "/" + tables["weights"]
 numberOfHomeworks = configData["homeworks"]
 numberOfQuizzes = configData["quizzes"]
 numberOfExams = configData["exams"]
 corruptRate = configData["corruptRate"]
+weights = configData["weights"]
+assignmentWeight = weights["assignments"]
+quizWeight = weights["quizzes"]
+examWeight = weights["exams"]
 
 print("Generating data...")
 
@@ -95,5 +100,8 @@ outputData(outputQuizzes, ["Student ID"] + ["Quiz " + str(i + 1) for i in range(
 
 # Exams
 outputData(outputExams, ["Student ID"] + ["Exam " + str(i + 1) for i in range(numberOfExams)], [[ids[i]] + examScores[i] for i in range(numberOfExams)])
+
+# Weights
+outputData(outputWeights, ["Category", "Weight"], [["Assignments", assignmentWeight], ["Quizzes", quizWeight], ["Exams", examWeight]])
 
 print("Data has been writen to folder: " + outputFolder)
