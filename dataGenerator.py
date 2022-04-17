@@ -8,6 +8,21 @@ readConfig = lambda src: json.load(open(src))
 # Reads text file line by line and store them in a list
 readNames = lambda src: open(src, "r").read().split("\n")
 
+# Generates random data
+def genData(n, corruptRate):
+    scores = []
+    for name in names:
+        randRule = random.uniform(0, 100)
+        x = 0
+        randIndex = 0
+        for rule in scoreRules:
+            if x <= randRule <= x + rule:
+                scores.append([-1 if random.uniform(0, 100) < corruptRate else round(randScoreFuncs[randIndex]()) for i in range(n)])
+                break
+            x += rule
+            randIndex += 1
+    return scores
+
 # Outputs data to a CSV file
 def outputData(fileName, header, rows):
     with open(fileName, "w", encoding="UTF8", newline="") as f:
@@ -27,6 +42,12 @@ outputFolder = configData["outputFolder"]
 tables = configData["tables"]
 outputStudents = outputFolder + "/" + tables["students"]
 outputAssignments = outputFolder + "/" + tables["assignments"]
+outputQuizzes = outputFolder + "/" + tables["quizzes"]
+outputExams = outputFolder + "/" + tables["exams"]
+numberOfHomeworks = configData["homeworks"]
+numberOfQuizzes = configData["quizzes"]
+numberOfExams = configData["exams"]
+corruptRate = configData["corruptRate"]
 
 print("Generating data...")
 
@@ -56,19 +77,9 @@ scoreRules = configData["scoreRules"]
 randScoreFuncs = [lambda p=p: random.uniform(p[0], p[1]) for p in configData["percentageRanges"]]
 
 # Generate random scores
-numberOfHomeworks = configData["homeworks"] # Number of entries per student
-corruptRate = configData["corruptRate"] # Data corruption probability
-homeworkScores = []
-for name in names:
-    randRule = random.uniform(0, 100)
-    x = 0
-    randIndex = 0
-    for rule in scoreRules:
-        if x <= randRule <= x + rule:
-            homeworkScores.append([-1 if random.uniform(0, 100) < corruptRate else round(randScoreFuncs[randIndex]()) for i in range(numberOfHomeworks)])
-            break
-        x += rule
-        randIndex += 1
+homeworkScores = genData(numberOfHomeworks, corruptRate)
+quizScores = genData(numberOfQuizzes, corruptRate)
+examScores = genData(numberOfExams, corruptRate)
 
 # Write tables to CSV files
 print("Writing generated data to files...")
@@ -78,5 +89,11 @@ outputData(outputStudents, ["Student ID", "Name", "Year"], [[ids[i], names[i], r
 
 # Assignments
 outputData(outputAssignments, ["Student ID"] + ["Assignment " + str(i + 1) for i in range(numberOfHomeworks)], [[ids[i]] + homeworkScores[i] for i in range(numberOfStudents)])
+
+# Quizzes
+outputData(outputQuizzes, ["Student ID"] + ["Quiz " + str(i + 1) for i in range(numberOfQuizzes)], [[ids[i]] + quizScores[i] for i in range(numberOfStudents)])
+
+# Exams
+outputData(outputExams, ["Student ID"] + ["Exam " + str(i + 1) for i in range(numberOfExams)], [[ids[i]] + examScores[i] for i in range(numberOfExams)])
 
 print("Data has been writen to folder: " + outputFolder)

@@ -12,6 +12,8 @@
         "exams": "exams.csv"
     },
     "homeworks": 10,
+    "quizzes": 5,
+    "exams": 4,
     "corruptRate": 5,
     "percentageRanges": [
         [0, 65],

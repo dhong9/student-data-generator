@@ -35,6 +35,14 @@ Which file contains students' last names? Assumption is that each name is on its
 
 How many homework assignments does each student get?
 
+### `quizzes`
+
+How many quizzes does each student get?
+
+### `exams`
+
+How many exams does each student get?
+
 ### `corruptRate`
 
 What is the probability that an assignment will _not_ get turned in?
